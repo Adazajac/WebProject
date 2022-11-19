@@ -66,8 +66,8 @@ class ArticleRepository extends ServiceEntityRepository
     public function search($term)
     {
         return $this->createQueryBuilder('a')
-            ->andWhere('a.name = :searchTeam')
-            ->setParameter('searchTeam', $term)
+            ->andWhere('a.name LIKE :searchTeam')
+            ->setParameter('searchTeam', '%' . $term . '%')
             ->getQuery()
             ->execute();
     }

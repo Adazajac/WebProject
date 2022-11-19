@@ -1,13 +1,20 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
+    {% for message in app.flashes('success') %}
+        <div class="alert alert-danger">
+            <h3>{{ message }}</h3>
+        </div>
+    {% endfor %}
     <div class="container text-lg-center">
         <table class="table table-striped table-hover table-bordered border-dark">
             <thead>
             <tr>
-                <td class="fw-bolder">Nazwa</td>
-                <td class="fw-bolder">Ilość</td>
-                <td class="fw-bolder">Plik</td>
+                <td class="fw-bolder">Name</td>
+                <td class="fw-bolder">Quentity</td>
+                <td class="fw-bolder">File</td>
+                <td class="fw-bolder">Add</td>
+                <td class="fw-bolder">Delete</td>
             </tr>
             </thead>
 
@@ -15,7 +22,9 @@
                 <tbody>
                 <td>{{ a.name }}</td>
                 <td>{{ a.quantity }}</td>
-                <td>{{ a.file }}</td>
+                <td><a href="{{ path('show',{id: a.id}) }}">{{ a.file }}</a></td>
+                <td><a href="{{ path('articleadd',{id: a.id}) }}">add</a></td>
+                <td><a href="{{ path('articledelete',{id: a.id}) }}">x</a></td>
                 </tbody>
             {% endfor %}
 

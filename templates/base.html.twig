@@ -19,23 +19,23 @@
 <nav class="navbar navbar-expand-lg bg-black">
     <div class="container-fluid">
         <a class="navbar-brand fw-bold white-text" href="{{ path('home') }}">Magazine</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
-                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
+        {#        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" #}
+        {#                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"> #}
+        {#            <span class="navbar-toggler-icon"></span> #}
+        {#        </button> #}
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item">
                     {% if is_granted('IS_AUTHENTICATED_FULLY') %}
                         <a class="nav-link active fw-semibold text-white" id="white" aria-current="page"
-                           href="{{ path('articleadd_new_article') }}">Add</a>
+                           href="{{ path('articleadd_new_article') }}">Add new article</a>
                     {% endif %}
                 </li>
-                <li class="nav-item">
-                    {% if is_granted('IS_AUTHENTICATED_FULLY') %}
-                        <a class="nav-link active fw-semibold text-white" aria-current="page" href="#">Release</a>
-                    {% endif %}
-                </li>
+                {#                <li class="nav-item"> #}
+                {#                    {% if is_granted('IS_AUTHENTICATED_FULLY') %} #}
+                {#                        <a class="nav-link active fw-semibold text-white" aria-current="page" href="#">Release</a> #}
+                {#                    {% endif %} #}
+                {#                </li> #}
                 {% if is_granted('IS_AUTHENTICATED_FULLY') %}
                     <form class="navbar-form" role="search"
                           action="{{ path('home') }}">

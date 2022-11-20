@@ -2,5 +2,9 @@
 
 
 {% block body %}
-    
+
+    <div class="container">
+        <h1 class="text-lg-center">{{ article.name }}</h1>
+        {{ form(createForm) }}
+    </div>
 {% endblock %}

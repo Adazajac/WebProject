@@ -4,7 +4,6 @@ namespace App\Controller;
 
 use App\Entity\Article;
 use App\Repository\ArticleRepository;
-use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -15,10 +14,8 @@ class HomeController extends AbstractController
     /**
      * @Route("/", name="home")
      */
-    public function index(ArticleRepository $articleRepository, Request $request): Response
+    public function search(ArticleRepository $articleRepository, Request $request): Response
     {
-//        $item = $articleRepository->find()
-
 
         $search = $request->query->get('q');
         if ($search) {
@@ -26,9 +23,6 @@ class HomeController extends AbstractController
         } else {
             $article = $articleRepository->findAll();
         }
-
-//        $article = $articleRepository->findName1();
-//        dd($article);
 
         return $this->render('home/index.html.twig', [
             'article' => $article,

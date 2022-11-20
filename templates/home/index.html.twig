@@ -14,6 +14,7 @@
                 <td class="fw-bolder">Quentity</td>
                 <td class="fw-bolder">File</td>
                 <td class="fw-bolder">Add</td>
+                <td class="fw-bolder">Release</td>
                 <td class="fw-bolder">Delete</td>
             </tr>
             </thead>
@@ -24,6 +25,7 @@
                 <td>{{ a.quantity }}</td>
                 <td><a href="{{ path('show',{id: a.id}) }}">{{ a.file }}</a></td>
                 <td><a href="{{ path('articleadd',{id: a.id}) }}">add</a></td>
+                <td><a href="{{ path('articlerelease',{id: a.id}) }}">release</a></td>
                 <td><a href="{{ path('articledelete',{id: a.id}) }}">x</a></td>
                 </tbody>
             {% endfor %}

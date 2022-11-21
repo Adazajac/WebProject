@@ -32,8 +32,9 @@ class HomeController extends AbstractController
     /**
      * @Route("/show/{id}", name="show")
      */
-    public function show(Article $article)
+    public function show(Article $article, Request $request)
     {
+        
         return $this->render('home/show.html.twig', [
             'article' => $article
         ]);

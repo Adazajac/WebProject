@@ -40,27 +40,29 @@ class ArticleController extends AbstractController
 
             $em = $managerRegistry->getManager();
             $file = $form->get('fileName')->getData();
-            if (filesize($file) <= 16777204) {
-                $this->addFlash('success', 'Max file size is 2M');
-                return $this->redirect($this->generateUrl('articleadd_new_article'));
-            } else {
 
-                if ($file) {
 
-                    $fileName = md5(uniqid()) . '.' . $file->guessClientExtension();
-                    $file->move(
-                        $this->getParameter('file_folder'),
-                        $fileName
-                    );
-                    $article->setFile($fileName);
+            if ($file) {
+//
+                if (!(filesize($file) <= 16777204)) {
+                    $this->addFlash('success', 'Max file size is 2M');
+                    return $this->redirect($this->generateUrl('articleadd_new_article'));
                 }
 
-
-                $em->persist($article);
-                $em->flush();
-                $this->addFlash('success', 'You added new article');
-                return $this->redirect($this->generateUrl('home'));
+                $fileName = md5(uniqid()) . '.' . $file->guessClientExtension();
+                $file->move(
+                    $this->getParameter('file_folder'),
+                    $fileName
+                );
+                $article->setFile($fileName);
             }
+
+
+            $em->persist($article);
+            $em->flush();
+            $this->addFlash('success', 'You added new article');
+            return $this->redirect($this->generateUrl('home'));
+
         }
 
 

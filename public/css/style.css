@@ -5,3 +5,11 @@ body {
 .white-text {
     color: #FFFFFF;
 }
+
+#logo:hover {
+    color: #FFFFFF;
+}
+
+#logo:active {
+    color: #FFFFFF;
+}

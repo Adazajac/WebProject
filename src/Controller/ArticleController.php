@@ -27,24 +27,40 @@ class ArticleController extends AbstractController
 
         $form = $this->createForm(ArticleFormType::class, $article);
 
-
         $form->handleRequest($request);
+        $number = $form->get('quantity')->getData();
+
+
         if ($form->isSubmitted()) {
-            $em = $managerRegistry->getManager();
-            $file = $form->get('file')->getData();
-            if ($file) {
-                $fileName = md5(uniqid()) . '.' . $file->guessClientExtension();
-                $file->move(
-                    $this->getParameter('file_folder'),
-                    $fileName
-                );
-                $article->setFile($fileName);
+            if ($number <= 0) {
+                $this->addFlash('success', 'Article must have some quantity');
+                return $this->redirect($this->generateUrl('articleadd_new_article'));
             }
 
 
-            $em->persist($article);
-            $em->flush();
-            return $this->redirect($this->generateUrl('home'));
+            $em = $managerRegistry->getManager();
+            $file = $form->get('fileName')->getData();
+            if (filesize($file) <= 16777204) {
+                $this->addFlash('success', 'Max file size is 2M');
+                return $this->redirect($this->generateUrl('articleadd_new_article'));
+            } else {
+
+                if ($file) {
+
+                    $fileName = md5(uniqid()) . '.' . $file->guessClientExtension();
+                    $file->move(
+                        $this->getParameter('file_folder'),
+                        $fileName
+                    );
+                    $article->setFile($fileName);
+                }
+
+
+                $em->persist($article);
+                $em->flush();
+                $this->addFlash('success', 'You added new article');
+                return $this->redirect($this->generateUrl('home'));
+            }
         }
 
 
@@ -65,7 +81,7 @@ class ArticleController extends AbstractController
         $em->remove($article);
         $em->flush();
 
-        //message
+
         $this->addFlash('success', 'Article removed correctly');
 
 
@@ -104,7 +120,9 @@ class ArticleController extends AbstractController
             $newQuantity = $quantity + $addValue;
             $article->setQuantity($newQuantity);
             $em->flush();
+            $this->addFlash('success', 'You added more existing goods');
             return $this->redirect($this->generateUrl('home'));
+
         }
 
         return $this->render('article/add_article/index.html.twig',
@@ -132,9 +150,10 @@ class ArticleController extends AbstractController
             if ($newQuantity >= 0) {
                 $article->setQuantity($newQuantity);
                 $em->flush();
+                $this->addFlash('success', 'Spent more existing goods');
                 return $this->redirect($this->generateUrl('home'));
             } else {
-                $this->addFlash('success', 'Article removed correctly');
+                $this->addFlash('success', 'You can\'t spend more than is in stock');
             }
 
         }

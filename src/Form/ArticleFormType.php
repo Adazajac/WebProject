@@ -10,6 +10,8 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\File;
+use Symfony\Component\Validator\Constraints\Image;
 
 class ArticleFormType extends AbstractType
 {
@@ -26,9 +28,22 @@ class ArticleFormType extends AbstractType
                     'placeholder' => 'Enter number...'
                 )
             ])
-            ->add('file', FileType::class, [
+            ->add('fileName', FileType::class, [
                 'mapped' => false,
-                'required' => false
+                'required' => false,
+                'constraints' => [
+                    new File([
+                        'maxSize' => '2M',
+                        'maxSizeMessage' => 'The file is too large ({{ size }} {{ suffix }}). Allowed maximum size is {{ limit }} {{ suffix }}.',
+                        'mimeTypes' => [
+                            'application/pdf',
+                            'application/xml',
+                        ],
+                    ])
+                ],
+                'attr' => [
+                    'accept' => '.pdf, .xml'
+                ]
             ])
             ->add('add', SubmitType::class, [
                 'attr' => array(

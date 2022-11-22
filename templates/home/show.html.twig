@@ -3,6 +3,13 @@
 {% block body %}
     <div class="container text-lg-center">
         <h1>{{ article.name }}</h1>
-        <iframe src="{{ asset('files/' ~ article.file) }}" style="width: 100%;height: 900px;border: none;"></iframe>
+        {% if results == false %}
+            <iframe src="{{ asset('files/' ~ article.file) }}" style="width: 100%;height: 900px;border: none;"></iframe>
+        {% else %}
+            {% for key, result in results %}
+                {{ key }} : {{ result }}<br>
+            {% endfor %}
+        {% endif %}
+        <br>
     </div>
 {% endblock %}

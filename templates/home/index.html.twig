@@ -1,7 +1,6 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <br>
     {% for message in app.flashes('success') %}
         <div class="alert alert-success">
             <h3>{{ message }}</h3>

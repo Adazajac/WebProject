@@ -4,12 +4,10 @@ namespace App\Controller;
 
 use App\Entity\Article;
 use App\Repository\ArticleRepository;
-use SimpleXMLElement;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\DomCrawler\Crawler;
 
 class HomeController extends AbstractController
 {
@@ -43,8 +41,8 @@ class HomeController extends AbstractController
         if ($xmlLast == 'xml') {
 
 
-            $xmlstr = file_get_contents('C:\Test\Symfony\WebProject\public\files' . '\\' . $xmlPath);
-            $xml = simplexml_load_string($xmlstr);
+            $xmlStr = file_get_contents($this->getParameter('file_folder') . DIRECTORY_SEPARATOR . $xmlPath);
+            $xml = simplexml_load_string($xmlStr);
 
             $json = json_encode($xml);
             $array = json_decode($json, TRUE);
@@ -57,7 +55,6 @@ class HomeController extends AbstractController
         }
 
 
-//        dd($results);
         return $this->render('home/show.html.twig', [
             'article' => $article,
             'results' => $results

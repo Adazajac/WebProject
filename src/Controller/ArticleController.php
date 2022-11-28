@@ -152,7 +152,7 @@ class ArticleController extends AbstractController
             if ($newQuantity >= 0) {
                 $article->setQuantity($newQuantity);
                 $em->flush();
-                $this->addFlash('success', 'Spent more existing goods');
+                $this->addFlash('success', 'Spent goods');
                 return $this->redirect($this->generateUrl('home'));
             } else {
                 $this->addFlash('success', 'You can\'t spend more than is in stock');
